@@ -201,21 +201,47 @@
       
       // Initialize newsletter functionality
       function initializeNewsletter() {
-        const subscribeButton = Array.from(document.querySelectorAll('button')).find(btn => 
-          btn.textContent.toLowerCase().includes('subscribe'));
-        const emailInput = document.querySelector('input[placeholder="Enter your email"]');
+        console.log('Initializing newsletter...');
         
-        if (subscribeButton) {
-          subscribeButton.addEventListener('click', subscribeToNewsletter);
-        }
-        
-        if (emailInput) {
-          emailInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+        // Wait for React to render, then find elements
+        setTimeout(() => {
+          const emailInput = document.querySelector('input[placeholder*="email"]') || 
+                           document.querySelector('input[placeholder*="Email"]') ||
+                           document.querySelector('input[placeholder="Enter your email"]');
+          const subscribeButton = Array.from(document.querySelectorAll('button')).find(btn => 
+            btn.textContent.toLowerCase().includes('subscribe'));
+          
+          console.log('Email input found:', !!emailInput);
+          console.log('Subscribe button found:', !!subscribeButton);
+          
+          if (emailInput && subscribeButton) {
+            // Remove any existing event listeners
+            subscribeButton.onclick = null;
+            
+            // Add click event listener
+            subscribeButton.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Subscribe button clicked!');
               subscribeToNewsletter();
-            }
-          });
-        }
+            });
+            
+            // Add Enter key support
+            emailInput.addEventListener('keypress', function(e) {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                console.log('Enter key pressed!');
+                subscribeToNewsletter();
+              }
+            });
+            
+            console.log('Newsletter event listeners attached successfully');
+          } else {
+            console.log('Newsletter elements not found, retrying...');
+            // Retry after another delay
+            setTimeout(initializeNewsletter, 1000);
+          }
+        }, 500);
       }
       
       // Track external link clicks
