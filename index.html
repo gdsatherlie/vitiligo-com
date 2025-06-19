@@ -100,7 +100,176 @@
           custom_parameter_1: category,
           value: url
         });
+        
+        // Enhanced ecommerce tracking
+        gtag('event', 'select_item', {
+          item_list_id: 'affiliate_products',
+          item_list_name: 'Affiliate Product Recommendations',
+          items: [{
+            item_id: productName.toLowerCase().replace(/\s+/g, '_'),
+            item_name: productName,
+            item_category: category,
+            item_list_id: 'affiliate_products',
+            item_list_name: 'Affiliate Product Recommendations'
+          }]
+        });
+        
+        // Track conversion goal
+        gtag('event', 'conversion', {
+          send_to: 'G-GCM5FRTZI1Y/affiliate_click',
+          event_category: 'affiliate',
+          event_label: productName,
+          value: 1
+        });
       }
+      
+      // Track product impressions
+      function trackProductImpressions() {
+        const products = [
+          {id: 'eltamd_uv_clear', name: 'EltaMD UV Clear SPF 46', category: 'sunscreen'},
+          {id: 'dermablend_cover_creme', name: 'Dermablend Cover Creme', category: 'makeup'},
+          {id: 'vitamin_d3_k2', name: 'Vitamin D3 K2 Complex', category: 'supplements'},
+          {id: 'cerave_cleanser', name: 'CeraVe Hydrating Cleanser', category: 'skincare'},
+          {id: 'coolibar_shirt', name: 'Coolibar UPF 50+ Shirt', category: 'clothing'},
+          {id: 'ginkgo_biloba', name: 'Ginkgo Biloba Extract', category: 'supplements'}
+        ];
+        
+        gtag('event', 'view_item_list', {
+          item_list_id: 'affiliate_products',
+          item_list_name: 'Affiliate Product Recommendations',
+          items: products.map(product => ({
+            item_id: product.id,
+            item_name: product.name,
+            item_category: product.category,
+            item_list_id: 'affiliate_products',
+            item_list_name: 'Affiliate Product Recommendations'
+          }))
+        });
+      }
+      
+      // Track when affiliate section comes into view
+      function setupAffiliateTracking() {
+        const affiliateSection = document.querySelector('.affiliate-section');
+        if (affiliateSection) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                trackProductImpressions();
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.5 });
+          
+          observer.observe(affiliateSection);
+        }
+      }
+      
+      // Initialize tracking when page loads
+      document.addEventListener('DOMContentLoaded', setupAffiliateTracking);
+      
+      // A/B Testing Framework
+      function initializeABTesting() {
+        // Get or create user variant
+        let userVariant = localStorage.getItem('affiliate_variant');
+        if (!userVariant) {
+          userVariant = Math.random() < 0.5 ? 'A' : 'B';
+          localStorage.setItem('affiliate_variant', userVariant);
+        }
+        
+        // Track variant assignment
+        gtag('event', 'ab_test_assignment', {
+          event_category: 'ab_testing',
+          event_label: 'affiliate_layout',
+          custom_parameter_1: userVariant
+        });
+        
+        // Apply variant styles
+        if (userVariant === 'B') {
+          applyVariantB();
+        }
+        
+        return userVariant;
+      }
+      
+      function applyVariantB() {
+        // Variant B: Different product order and styling
+        const style = document.createElement('style');
+        style.textContent = `
+          .products-grid.variant-b {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          }
+          
+          .product-card.variant-b {
+            border: 2px solid #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+          }
+          
+          .product-card.variant-b .affiliate-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            font-size: 1rem;
+            padding: 1rem 1.5rem;
+          }
+          
+          .product-card.variant-b .affiliate-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+          }
+          
+          .product-card.variant-b .product-price {
+            font-size: 1.3rem;
+            color: #059669;
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Apply variant classes when DOM is ready
+        setTimeout(() => {
+          const grid = document.querySelector('.products-grid');
+          const cards = document.querySelectorAll('.product-card');
+          
+          if (grid) grid.classList.add('variant-b');
+          cards.forEach(card => card.classList.add('variant-b'));
+          
+          // Reorder products for variant B (supplements first)
+          const supplementCards = Array.from(cards).filter(card => 
+            card.querySelector('.product-category').textContent.includes('Supplements')
+          );
+          const otherCards = Array.from(cards).filter(card => 
+            !card.querySelector('.product-category').textContent.includes('Supplements')
+          );
+          
+          // Clear and reorder
+          grid.innerHTML = '';
+          [...supplementCards, ...otherCards].forEach(card => grid.appendChild(card));
+        }, 100);
+      }
+      
+      // Track A/B test conversions
+      function trackABTestConversion(variant, productName) {
+        gtag('event', 'ab_test_conversion', {
+          event_category: 'ab_testing',
+          event_label: 'affiliate_layout',
+          custom_parameter_1: variant,
+          custom_parameter_2: productName,
+          value: 1
+        });
+      }
+      
+      // Enhanced affiliate click tracking with A/B test data
+      function trackAffiliateClickEnhanced(productName, category, url) {
+        const variant = localStorage.getItem('affiliate_variant') || 'A';
+        
+        // Original tracking
+        trackAffiliateClick(productName, category, url);
+        
+        // A/B test conversion tracking
+        trackABTestConversion(variant, productName);
+      }
+      
+      // Initialize A/B testing
+      document.addEventListener('DOMContentLoaded', () => {
+        setupAffiliateTracking();
+        initializeABTesting();
+      });
     </script>
     
     <!-- Affiliate Products Styles -->
@@ -296,7 +465,7 @@
               <li>Recommended by dermatologists</li>
             </ul>
             <div class="product-price">$37.00</div>
-            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('EltaMD UV Clear SPF 46', 'sunscreen', this.href)">View on Amazon</a>
+            <a href="https://www.amazon.com/dp/B002MSN3QQ?tag=vitiligotoday-20&linkCode=ogi&th=1&psc=1" class="affiliate-btn" onclick="trackAffiliateClick('EltaMD UV Clear SPF 46', 'sunscreen', this.href)" target="_blank" rel="noopener">View on Amazon</a>
           </div>
           
           <!-- Makeup Coverage -->
@@ -311,7 +480,7 @@
               <li>Dermatologist tested</li>
             </ul>
             <div class="product-price">$29.00</div>
-            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Dermablend Cover Creme', 'makeup', this.href)">View on Amazon</a>
+            <a href="https://www.amazon.com/dp/B00BQYC7GE?tag=vitiligotoday-20&linkCode=ogi&th=1&psc=1" class="affiliate-btn" onclick="trackAffiliateClick('Dermablend Cover Creme', 'makeup', this.href)" target="_blank" rel="noopener">View on Amazon</a>
           </div>
           
           <!-- Vitamin Supplements -->
@@ -326,7 +495,7 @@
               <li>90-day supply</li>
             </ul>
             <div class="product-price">$24.95</div>
-            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Vitamin D3 K2 Complex', 'supplements', this.href)">View on iHerb</a>
+            <a href="https://www.iherb.com/pr/sports-research-vitamin-d3-k2-5000-iu-100-mcg-60-veggie-softgels/81353?rcode=VTL2025" class="affiliate-btn" onclick="trackAffiliateClick('Vitamin D3 K2 Complex', 'supplements', this.href)" target="_blank" rel="noopener">View on iHerb</a>
           </div>
           
           <!-- Gentle Skincare -->
@@ -341,7 +510,7 @@
               <li>Suitable for sensitive skin</li>
             </ul>
             <div class="product-price">$14.99</div>
-            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('CeraVe Hydrating Cleanser', 'skincare', this.href)">View on Amazon</a>
+            <a href="https://www.amazon.com/dp/B01MSSDEPK?tag=vitiligotoday-20&linkCode=ogi&th=1&psc=1" class="affiliate-btn" onclick="trackAffiliateClick('CeraVe Hydrating Cleanser', 'skincare', this.href)" target="_blank" rel="noopener">View on Amazon</a>
           </div>
           
           <!-- UV Protection Clothing -->
@@ -356,7 +525,7 @@
               <li>Machine washable</li>
             </ul>
             <div class="product-price">$65.00</div>
-            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Coolibar UPF 50+ Shirt', 'clothing', this.href)">View on Coolibar</a>
+            <a href="https://www.coolibar.com/product/men/shirts/long-sleeve-shirts/zno-fleck-long-sleeve-t-shirt.html?utm_source=affiliate&utm_medium=vitiligotoday&utm_campaign=vitiligo" class="affiliate-btn" onclick="trackAffiliateClick('Coolibar UPF 50+ Shirt', 'clothing', this.href)" target="_blank" rel="noopener">View on Coolibar</a>
           </div>
           
           <!-- Antioxidant Support -->
@@ -371,7 +540,7 @@
               <li>60-day supply</li>
             </ul>
             <div class="product-price">$19.95</div>
-            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Ginkgo Biloba Extract', 'supplements', this.href)">View on iHerb</a>
+            <a href="https://www.iherb.com/pr/now-foods-ginkgo-biloba-240-mg-120-veg-capsules/1056?rcode=VTL2025" class="affiliate-btn" onclick="trackAffiliateClick('Ginkgo Biloba Extract', 'supplements', this.href)" target="_blank" rel="noopener">View on iHerb</a>
           </div>
         </div>
         
