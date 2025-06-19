@@ -6,13 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VitiligoToday.com - Latest Vitiligo Research & Treatment Breakthroughs</title>
     <meta name="description" content="Your trusted source for the latest vitiligo research, treatment breakthroughs, and clinical trial updates from leading medical institutions worldwide." />
-    <meta name="keywords" content="vitiligo, vitiligo treatment, vitiligo research, clinical trials, dermatology, pigmentation disorders" />
+    <meta name="keywords" content="vitiligo, vitiligo treatment, vitiligo research, clinical trials, dermatology, pigmentation disorders, JAK inhibitors, phototherapy, vitiligo specialists, vitiligo cure, autoimmune skin condition" />
+    <meta name="author" content="VitiligoToday.com" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://vitiligotoday.com/" />
+    
+    <!-- Enhanced Open Graph Meta Tags -->
     <meta property="og:title" content="VitiligoToday.com - Latest Vitiligo Research & Treatment Breakthroughs" />
     <meta property="og:description" content="Your trusted source for the latest vitiligo research, treatment breakthroughs, and clinical trial updates from leading medical institutions worldwide." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vitiligotoday.com/" />
+    <meta property="og:site_name" content="VitiligoToday.com" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@VitiligoToday" />
     <meta name="twitter:title" content="VitiligoToday.com - Latest Vitiligo Research & Treatment Breakthroughs" />
     <meta name="twitter:description" content="Your trusted source for the latest vitiligo research, treatment breakthroughs, and clinical trial updates from leading medical institutions worldwide." />
+    
+    <!-- Medical/Health Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "name": "VitiligoToday.com",
+      "description": "Comprehensive vitiligo research, treatment information, and clinical trial updates",
+      "url": "https://vitiligotoday.com",
+      "mainEntity": {
+        "@type": "MedicalCondition",
+        "name": "Vitiligo",
+        "alternateName": ["Leucoderma", "White Spot Disease"],
+        "description": "A chronic autoimmune condition causing loss of skin pigmentation"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "VitiligoToday.com",
+        "url": "https://vitiligotoday.com"
+      },
+      "medicalAudience": [
+        {
+          "@type": "MedicalAudience",
+          "audienceType": "Patient"
+        },
+        {
+          "@type": "MedicalAudience", 
+          "audienceType": "Researcher"
+        }
+      ],
+      "about": {
+        "@type": "MedicalCondition",
+        "name": "Vitiligo"
+      }
+    }
+    </script>
     
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCM5FRTZI1Y"></script>
@@ -44,12 +91,294 @@
           value: url
         });
       }
+      
+      // Track affiliate link clicks
+      function trackAffiliateClick(productName, category, url) {
+        gtag('event', 'affiliate_click', {
+          event_category: 'affiliate',
+          event_label: productName,
+          custom_parameter_1: category,
+          value: url
+        });
+      }
     </script>
+    
+    <!-- Affiliate Products Styles -->
+    <style>
+      .affiliate-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 3rem 1rem;
+        margin: 2rem 0;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+      }
+      
+      .affiliate-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .affiliate-title {
+        text-align: center;
+        color: #1e293b;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      
+      .affiliate-subtitle {
+        text-align: center;
+        color: #64748b;
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      
+      .product-card {
+        background: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      
+      .product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      }
+      
+      .product-category {
+        display: inline-block;
+        background: #3b82f6;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      
+      .product-title {
+        color: #1e293b;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      
+      .product-description {
+        color: #64748b;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+      }
+      
+      .product-features {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+      }
+      
+      .product-features li {
+        color: #475569;
+        font-size: 0.85rem;
+        padding: 0.25rem 0;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+      
+      .product-features li:before {
+        content: "✓";
+        color: #10b981;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+      }
+      
+      .product-price {
+        color: #dc2626;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      
+      .affiliate-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .affiliate-btn:hover {
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+        transform: translateY(-1px);
+        color: white;
+        text-decoration: none;
+      }
+      
+      .affiliate-disclaimer {
+        background: #fef3c7;
+        border: 1px solid #f59e0b;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #92400e;
+        text-align: center;
+      }
+      
+      .affiliate-disclaimer strong {
+        color: #78350f;
+      }
+      
+      @media (max-width: 768px) {
+        .affiliate-section {
+          padding: 2rem 1rem;
+          margin: 1rem 0;
+        }
+        
+        .affiliate-title {
+          font-size: 1.5rem;
+        }
+        
+        .products-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        
+        .product-card {
+          padding: 1.25rem;
+        }
+      }
+    </style>
     
     <script type="module" crossorigin src="/assets/index-BwyOWh25.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BrxXsk4O.css">
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Affiliate Products Section -->
+    <section class="affiliate-section">
+      <div class="affiliate-container">
+        <h2 class="affiliate-title">Recommended Products for Vitiligo Care</h2>
+        <p class="affiliate-subtitle">Carefully selected products to support your vitiligo management journey, recommended by dermatologists and trusted by the vitiligo community.</p>
+        
+        <div class="products-grid">
+          <!-- Sunscreen Protection -->
+          <div class="product-card">
+            <span class="product-category">Sun Protection</span>
+            <h3 class="product-title">EltaMD UV Clear Broad-Spectrum SPF 46</h3>
+            <p class="product-description">Dermatologist-recommended facial sunscreen specifically formulated for sensitive skin conditions including vitiligo. Contains zinc oxide and niacinamide.</p>
+            <ul class="product-features">
+              <li>Broad-spectrum UVA/UVB protection</li>
+              <li>Non-comedogenic and fragrance-free</li>
+              <li>Contains niacinamide for skin calming</li>
+              <li>Recommended by dermatologists</li>
+            </ul>
+            <div class="product-price">$37.00</div>
+            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('EltaMD UV Clear SPF 46', 'sunscreen', this.href)">View on Amazon</a>
+          </div>
+          
+          <!-- Makeup Coverage -->
+          <div class="product-card">
+            <span class="product-category">Coverage</span>
+            <h3 class="product-title">Dermablend Professional Cover Creme</h3>
+            <p class="product-description">Full-coverage foundation specifically designed to cover vitiligo patches and other skin discolorations. Buildable, long-wearing formula.</p>
+            <ul class="product-features">
+              <li>Full coverage for vitiligo patches</li>
+              <li>16-hour wear time</li>
+              <li>Available in 16 shades</li>
+              <li>Dermatologist tested</li>
+            </ul>
+            <div class="product-price">$29.00</div>
+            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Dermablend Cover Creme', 'makeup', this.href)">View on Amazon</a>
+          </div>
+          
+          <!-- Vitamin Supplements -->
+          <div class="product-card">
+            <span class="product-category">Supplements</span>
+            <h3 class="product-title">Vitamin D3 5000 IU + K2 Complex</h3>
+            <p class="product-description">High-potency vitamin D3 with K2 for optimal absorption. Research suggests vitamin D supplementation may support vitiligo treatment outcomes.</p>
+            <ul class="product-features">
+              <li>5000 IU Vitamin D3 per capsule</li>
+              <li>Includes Vitamin K2 for absorption</li>
+              <li>Third-party tested for purity</li>
+              <li>90-day supply</li>
+            </ul>
+            <div class="product-price">$24.95</div>
+            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Vitamin D3 K2 Complex', 'supplements', this.href)">View on iHerb</a>
+          </div>
+          
+          <!-- Gentle Skincare -->
+          <div class="product-card">
+            <span class="product-category">Skincare</span>
+            <h3 class="product-title">CeraVe Hydrating Cleanser</h3>
+            <p class="product-description">Gentle, non-foaming cleanser that maintains the skin's natural barrier. Ideal for sensitive vitiligo-affected skin that needs gentle care.</p>
+            <ul class="product-features">
+              <li>Fragrance-free and non-irritating</li>
+              <li>Contains ceramides and hyaluronic acid</li>
+              <li>Developed with dermatologists</li>
+              <li>Suitable for sensitive skin</li>
+            </ul>
+            <div class="product-price">$14.99</div>
+            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('CeraVe Hydrating Cleanser', 'skincare', this.href)">View on Amazon</a>
+          </div>
+          
+          <!-- UV Protection Clothing -->
+          <div class="product-card">
+            <span class="product-category">UV Clothing</span>
+            <h3 class="product-title">Coolibar UPF 50+ Long Sleeve Shirt</h3>
+            <p class="product-description">Lightweight, breathable UV protection clothing with UPF 50+ rating. Essential for protecting vitiligo-affected areas from sun exposure.</p>
+            <ul class="product-features">
+              <li>UPF 50+ sun protection</li>
+              <li>Moisture-wicking fabric</li>
+              <li>Lightweight and breathable</li>
+              <li>Machine washable</li>
+            </ul>
+            <div class="product-price">$65.00</div>
+            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Coolibar UPF 50+ Shirt', 'clothing', this.href)">View on Coolibar</a>
+          </div>
+          
+          <!-- Antioxidant Support -->
+          <div class="product-card">
+            <span class="product-category">Supplements</span>
+            <h3 class="product-title">Ginkgo Biloba Extract 240mg</h3>
+            <p class="product-description">Standardized ginkgo biloba extract that has shown promise in clinical studies for vitiligo management. High-potency formula with 24% flavonoids.</p>
+            <ul class="product-features">
+              <li>240mg standardized extract</li>
+              <li>24% flavone glycosides</li>
+              <li>Research-backed dosage</li>
+              <li>60-day supply</li>
+            </ul>
+            <div class="product-price">$19.95</div>
+            <a href="#" class="affiliate-btn" onclick="trackAffiliateClick('Ginkgo Biloba Extract', 'supplements', this.href)">View on iHerb</a>
+          </div>
+        </div>
+        
+        <div class="affiliate-disclaimer">
+          <strong>Affiliate Disclosure:</strong> VitiligoToday.com participates in affiliate programs and may earn commissions from purchases made through links on this page. This helps support our mission to provide free, evidence-based vitiligo information. Product recommendations are based on research and community feedback, not commission rates. Always consult your dermatologist before starting new treatments or supplements.
+        </div>
+      </div>
+    </section>
   </body>
 </html>
