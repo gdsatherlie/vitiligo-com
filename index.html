@@ -711,5 +711,136 @@
         </div>
       </div>
     </section>
+    
+    <!-- Simple Working Newsletter Modal (bypasses React) -->
+    <div id="simple-newsletter" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 10000; max-width: 400px; width: 90%;">
+      <h3 style="margin: 0 0 15px 0; color: #333;">Subscribe to Newsletter</h3>
+      <p style="margin: 0 0 20px 0; color: #666; font-size: 14px;">Get the latest vitiligo research and treatment updates.</p>
+      <form id="simple-newsletter-form" onsubmit="submitSimpleNewsletter(event)">
+        <input type="email" id="simple-email" placeholder="Enter your email" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 15px; font-size: 16px; box-sizing: border-box;">
+        <button type="submit" id="simple-submit" style="width: 100%; padding: 12px; background: #7c3aed; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-bottom: 10px;">Subscribe</button>
+        <button type="button" onclick="closeSimpleNewsletter()" style="width: 100%; padding: 8px; background: #f3f4f6; color: #666; border: none; border-radius: 5px; font-size: 14px; cursor: pointer;">Cancel</button>
+      </form>
+      <div id="simple-message" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="simple-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999;" onclick="closeSimpleNewsletter()"></div>
+    
+    <script>
+      // Simple newsletter functions that work independently of React
+      function showSimpleNewsletter() {
+        document.getElementById('simple-newsletter').style.display = 'block';
+        document.getElementById('simple-overlay').style.display = 'block';
+        document.getElementById('simple-email').focus();
+      }
+      
+      function closeSimpleNewsletter() {
+        document.getElementById('simple-newsletter').style.display = 'none';
+        document.getElementById('simple-overlay').style.display = 'none';
+      }
+      
+      function showSimpleMessage(message, type) {
+        const messageDiv = document.getElementById('simple-message');
+        messageDiv.textContent = message;
+        messageDiv.style.display = 'block';
+        messageDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+        messageDiv.style.color = type === 'success' ? '#155724' : '#721c24';
+        messageDiv.style.border = type === 'success' ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
+        
+        setTimeout(() => {
+          messageDiv.style.display = 'none';
+        }, 5000);
+      }
+      
+      async function submitSimpleNewsletter(event) {
+        event.preventDefault();
+        
+        const email = document.getElementById('simple-email').value.trim();
+        const submitBtn = document.getElementById('simple-submit');
+        
+        if (!email) {
+          showSimpleMessage('Please enter your email address.', 'error');
+          return;
+        }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showSimpleMessage('Please enter a valid email address.', 'error');
+          return;
+        }
+        
+        // Show loading state
+        submitBtn.textContent = 'Subscribing...';
+        submitBtn.disabled = true;
+        
+        try {
+          const response = await fetch('https://ogh5izcv1jjp.manus.space/api/newsletter/subscribe', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email })
+          });
+          
+          const data = await response.json();
+          
+          if (response.ok && data.success) {
+            showSimpleMessage('Successfully subscribed! Thank you for joining our newsletter.', 'success');
+            document.getElementById('simple-email').value = '';
+            
+            // Track with Google Analytics
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'newsletter_signup', {
+                event_category: 'engagement',
+                event_label: 'simple_form',
+                value: 1
+              });
+            }
+            
+            // Close form after success
+            setTimeout(() => {
+              closeSimpleNewsletter();
+            }, 2000);
+            
+          } else {
+            showSimpleMessage(data.message || 'Subscription failed. Please try again.', 'error');
+          }
+          
+        } catch (error) {
+          console.error('Newsletter subscription error:', error);
+          showSimpleMessage('Network error. Please check your connection and try again.', 'error');
+        } finally {
+          submitBtn.textContent = 'Subscribe';
+          submitBtn.disabled = false;
+        }
+      }
+      
+      // Replace React newsletter button functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up newsletter...');
+        
+        // Wait for React to render
+        setTimeout(() => {
+          const subscribeButton = Array.from(document.querySelectorAll('button')).find(btn => 
+            btn.textContent.toLowerCase().includes('subscribe'));
+          
+          if (subscribeButton) {
+            // Replace the button's functionality
+            subscribeButton.onclick = function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Newsletter button clicked - opening modal');
+              showSimpleNewsletter();
+            };
+            console.log('Newsletter button functionality replaced successfully');
+          } else {
+            console.log('Subscribe button not found, retrying...');
+            setTimeout(arguments.callee, 1000);
+          }
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
