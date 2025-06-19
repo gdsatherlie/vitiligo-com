@@ -13,6 +13,39 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="VitiligoToday.com - Latest Vitiligo Research & Treatment Breakthroughs" />
     <meta name="twitter:description" content="Your trusted source for the latest vitiligo research, treatment breakthroughs, and clinical trial updates from leading medical institutions worldwide." />
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        page_title: 'VitiligoToday.com',
+        page_location: window.location.href,
+        custom_map: {
+          'custom_parameter_1': 'vitiligo_content_type'
+        }
+      });
+      
+      // Track newsletter signups
+      function trackNewsletterSignup() {
+        gtag('event', 'newsletter_signup', {
+          event_category: 'engagement',
+          event_label: 'newsletter'
+        });
+      }
+      
+      // Track external link clicks
+      function trackExternalLink(url, linkText) {
+        gtag('event', 'click', {
+          event_category: 'external_link',
+          event_label: linkText,
+          value: url
+        });
+      }
+    </script>
+    
     <script type="module" crossorigin src="/assets/index-BwyOWh25.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BrxXsk4O.css">
   </head>
