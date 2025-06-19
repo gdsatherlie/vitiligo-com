@@ -436,59 +436,37 @@
       </div>
     </section>
     
-    <!-- ConvertKit Newsletter Integration -->
-    <script>
-      // Initialize ConvertKit form integration
-      function initConvertKit() {
-        console.log('Initializing ConvertKit integration...');
+    <!-- Direct ConvertKit Newsletter Section -->
+    <section style="background: var(--background-light); padding: 3rem 2rem; margin: 2rem 0; border-radius: 12px; border: 1px solid var(--border-light);">
+      <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px;">
+          <img src="/vitiligotoday-logo-icon.png" alt="VitiligoToday" style="width: 40px; height: 40px;">
+          <h2 style="color: var(--primary-blue); margin: 0; font-size: 24px; font-weight: 700;">Stay Updated on Vitiligo Breakthroughs</h2>
+        </div>
+        <p style="color: var(--text-medium); margin-bottom: 30px; font-size: 16px; line-height: 1.6;">Get weekly updates on breakthrough research, new treatments, and clinical trials delivered directly to your inbox. Join thousands of others in the vitiligo community.</p>
         
-        // Wait for React app to load
+        <!-- ConvertKit Form Embed -->
+        <script async data-uid="0412d0fd17" src="https://vitiligotoday.ck.page/0412d0fd17/index.js"></script>
+        
+        <p style="color: var(--text-light); font-size: 12px; margin-top: 16px;">We respect your privacy. Unsubscribe at any time.</p>
+      </div>
+    </section>
+    
+    <!-- Google Analytics Event Tracking -->
+    <script>
+      // Track ConvertKit form interactions
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track when ConvertKit form loads
         setTimeout(() => {
-          // Find the newsletter section in the React app
-          const newsletterSection = document.querySelector('[class*="newsletter"]') ||
-                                  document.querySelector('[class*="stay-informed"]') ||
-                                  document.querySelector('.sidebar') ||
-                                  document.querySelector('[class*="stay-informed"]');
-          
-          if (newsletterSection) {
-            // Replace with direct ConvertKit embed
-            const convertKitForm = `
-              <div class="convertkit-newsletter-container" style="background: var(--white); padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08); border: 1px solid var(--border-light);">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                  <img src="/vitiligotoday-logo-icon.png" alt="VitiligoToday" style="width: 32px; height: 32px;">
-                  <h3 style="color: var(--primary-blue); margin: 0; font-size: 18px; font-weight: 600;">Stay Informed</h3>
-                </div>
-                <p style="color: var(--text-medium); margin-bottom: 20px; font-size: 14px; line-height: 1.5;">Get the latest vitiligo research, treatment updates, and breakthrough discoveries delivered to your inbox</p>
-                
-                <!-- Direct ConvertKit Form Embed -->
-                <script async data-uid="0412d0fd17" src="https://vitiligotoday.ck.page/0412d0fd17/index.js"></script>
-              </div>
-            `;
-            
-            // Replace the newsletter content
-            newsletterSection.innerHTML = convertKitForm;
-            
-            // Track with Google Analytics
-            if (typeof gtag !== 'undefined') {
-              gtag('event', 'convertkit_form_loaded', {
-                event_category: 'newsletter',
-                event_label: 'form_integration'
-              });
-            }
-            
-            console.log('ConvertKit form integrated successfully');
-          } else {
-            console.log('Newsletter section not found, retrying...');
-            setTimeout(initConvertKit, 1000);
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'convertkit_form_loaded', {
+              event_category: 'newsletter',
+              event_label: 'static_embed'
+            });
+            console.log('ConvertKit form loaded and tracked');
           }
-        }, 2000);
-      }
-      
-      // Initialize when page loads
-      document.addEventListener('DOMContentLoaded', initConvertKit);
-      
-      // Also try after a delay for React apps
-      setTimeout(initConvertKit, 3000);
+        }, 3000);
+      });
     </script>
   </body>
 </html>
