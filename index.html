@@ -70,7 +70,7 @@
     </script>
     
     <!-- Google Analytics 4 - Enhanced Setup -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCM5FRTZ1Y"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CM5FRTZ1Y"></script>
     <script>
       // Initialize dataLayer first
       window.dataLayer = window.dataLayer || [];
@@ -85,7 +85,7 @@
       gtag('js', new Date());
       
       // Configure GA4 with enhanced settings
-      gtag('config', 'G-GCM5FRTZ1Y', {
+      gtag('config', 'G-6CM5FRTZ1Y', {
         page_title: 'VitiligoToday.com',
         page_location: window.location.href,
         send_page_view: true,
@@ -141,13 +141,13 @@
       // Verify GA is working
       setTimeout(function() {
         if (typeof gtag !== 'undefined' && window.dataLayer) {
-          console.log('✅ Google Analytics loaded successfully with ID: G-GCM5FRTZ1Y');
+          console.log('✅ Google Analytics loaded successfully with CORRECT ID: G-6CM5FRTZ1Y');
           console.log('📊 DataLayer length:', window.dataLayer.length);
           
           // Send test event
           gtag('event', 'ga_loaded', {
             event_category: 'system',
-            event_label: 'analytics_initialized'
+            event_label: 'analytics_initialized_correct_id'
           });
         } else {
           console.error('❌ Google Analytics failed to load');
@@ -156,7 +156,7 @@
         }
       }, 2000);
       
-      console.log('🚀 Google Analytics initialization script loaded with correct ID: G-GCM5FRTZ1Y');
+      console.log('🚀 Google Analytics initialization script loaded with CORRECT ID: G-6CM5FRTZ1Y');
     </script>
 
     <style>
@@ -541,7 +541,7 @@
       // Enhanced page load and form tracking
       document.addEventListener('DOMContentLoaded', function() {
         // Force cache refresh
-        console.log('Cache version: v2025-06-20-correct-ga-id');
+        console.log('Cache version: v2025-06-20-final-correct-ga-id');
         console.log('Page loaded at:', new Date().toISOString());
         
         // Track when ConvertKit form loads and add GA tracking
@@ -624,4 +624,4 @@
   </body>
 </html>
 
-<!-- Cache Buster: v2025-06-20-correct-ga-id-timestamp-1734665600 -->
+<!-- Cache Buster: v2025-06-20-final-correct-ga-id-timestamp-1734665800 -->
