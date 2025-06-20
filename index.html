@@ -5,6 +5,13 @@
     <link rel="icon" type="image/png" href="/vitiligotoday-logo-icon.png" />
     <link rel="apple-touch-icon" href="/vitiligotoday-logo-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Cache Busting Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="cache-version" content="v2025-06-20-convertkit-fix" />
+    
     <title>VitiligoToday.com - Latest Vitiligo Research & Treatment Breakthroughs</title>
     <meta name="description" content="Your trusted source for the latest vitiligo research, treatment breakthroughs, and clinical trial updates from leading medical institutions worldwide." />
     <meta name="keywords" content="vitiligo, vitiligo treatment, vitiligo research, clinical trials, dermatology, pigmentation disorders, JAK inhibitors, phototherapy, vitiligo specialists, vitiligo cure, autoimmune skin condition" />
@@ -326,8 +333,8 @@
         }
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-BwyOWh25.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BrxXsk4O.css">
+    <script type="module" crossorigin src="/assets/index-BwyOWh25.js?v=convertkit-fix-2025"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BrxXsk4O.css?v=convertkit-fix-2025">
   </head>
   <body>
     <div id="root"></div>
@@ -483,21 +490,39 @@
     
     <!-- Google Analytics Event Tracking -->
     <script>
-      // Track ConvertKit form interactions
+      // Cache busting and ConvertKit form tracking
       document.addEventListener('DOMContentLoaded', function() {
+        // Force cache refresh
+        console.log('Cache version: v2025-06-20-convertkit-fix');
+        console.log('Page loaded at:', new Date().toISOString());
+        
         // Track when ConvertKit form loads
         setTimeout(() => {
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'convertkit_form_loaded', {
-              event_category: 'newsletter',
-              event_label: 'static_embed'
-            });
-            console.log('ConvertKit form loaded and tracked');
+          const ckForm = document.querySelector('.formkit-form');
+          if (ckForm) {
+            console.log('✅ ConvertKit form found and loaded successfully!');
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'convertkit_form_loaded', {
+                event_category: 'newsletter',
+                event_label: 'static_embed_v2'
+              });
+            }
+          } else {
+            console.log('❌ ConvertKit form not found - cache issue detected');
           }
-        }, 3000);
+        }, 2000);
+        
+        // Force reload if ConvertKit form not found after 5 seconds
+        setTimeout(() => {
+          const ckForm = document.querySelector('.formkit-form');
+          if (!ckForm) {
+            console.log('🔄 ConvertKit form still not found, forcing reload...');
+            window.location.reload(true);
+          }
+        }, 5000);
       });
     </script>
   </body>
 </html>
 
-<!-- Force deployment -->
+<!-- Cache Buster: v2025-06-20-convertkit-fix-timestamp-1734663600 -->
