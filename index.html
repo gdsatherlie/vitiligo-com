@@ -69,46 +69,94 @@
     }
     </script>
     
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0TSBHDPX6"></script>
+    <!-- Google Analytics 4 - Enhanced Setup -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCM5FRTZ1Y"></script>
     <script>
+      // Initialize dataLayer first
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      
+      // Define gtag function
+      function gtag(){
+        dataLayer.push(arguments);
+        console.log('gtag called with:', arguments);
+      }
+      
+      // Set up Google Analytics
       gtag('js', new Date());
       
-      gtag('config', 'G-L0TSBHDPX6', {
+      // Configure GA4 with enhanced settings
+      gtag('config', 'G-GCM5FRTZ1Y', {
         page_title: 'VitiligoToday.com',
         page_location: window.location.href,
-        send_page_view: true
+        send_page_view: true,
+        debug_mode: true,
+        custom_map: {
+          'custom_parameter_1': 'product_category'
+        }
       });
       
-      // Track newsletter signups
-      function trackNewsletterSignup() {
-        gtag('event', 'newsletter_signup', {
-          event_category: 'engagement',
-          event_label: 'convertkit_form'
-        });
-        console.log('Newsletter signup tracked with Google Analytics');
-      }
+      // Enhanced tracking functions
+      window.trackNewsletterSignup = function() {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'newsletter_signup', {
+            event_category: 'engagement',
+            event_label: 'convertkit_form',
+            value: 1
+          });
+          console.log('✅ Newsletter signup tracked with Google Analytics');
+        } else {
+          console.error('❌ gtag not available for newsletter tracking');
+        }
+      };
       
-      // Track affiliate link clicks
-      function trackAffiliateClick(productName, category, url) {
-        gtag('event', 'affiliate_click', {
-          event_category: 'affiliate',
-          event_label: productName,
-          custom_parameter_1: category,
-          value: url
-        });
-        console.log('Affiliate click tracked:', productName);
-      }
+      window.trackAffiliateClick = function(productName, category, url) {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'affiliate_click', {
+            event_category: 'affiliate',
+            event_label: productName,
+            product_category: category,
+            click_url: url,
+            value: 1
+          });
+          console.log('✅ Affiliate click tracked:', productName);
+        } else {
+          console.error('❌ gtag not available for affiliate tracking');
+        }
+      };
       
-      // Track page views
-      gtag('event', 'page_view', {
-        page_title: 'VitiligoToday.com',
-        page_location: window.location.href
-      });
+      window.trackReadMore = function(articleTitle, source) {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'read_more_click', {
+            event_category: 'content',
+            event_label: articleTitle,
+            article_source: source,
+            value: 1
+          });
+          console.log('✅ Read More tracked:', articleTitle);
+        } else {
+          console.error('❌ gtag not available for read more tracking');
+        }
+      };
       
-      console.log('Google Analytics initialized successfully');
+      // Verify GA is working
+      setTimeout(function() {
+        if (typeof gtag !== 'undefined' && window.dataLayer) {
+          console.log('✅ Google Analytics loaded successfully with ID: G-GCM5FRTZ1Y');
+          console.log('📊 DataLayer length:', window.dataLayer.length);
+          
+          // Send test event
+          gtag('event', 'ga_loaded', {
+            event_category: 'system',
+            event_label: 'analytics_initialized'
+          });
+        } else {
+          console.error('❌ Google Analytics failed to load');
+          console.error('gtag available:', typeof gtag !== 'undefined');
+          console.error('dataLayer available:', !!window.dataLayer);
+        }
+      }, 2000);
+      
+      console.log('🚀 Google Analytics initialization script loaded with correct ID: G-GCM5FRTZ1Y');
     </script>
 
     <style>
@@ -488,23 +536,36 @@
       </div>
     </section>
     
-    <!-- Google Analytics Event Tracking -->
+    <!-- Enhanced Google Analytics Event Tracking -->
     <script>
-      // Cache busting and ConvertKit form tracking
+      // Enhanced page load and form tracking
       document.addEventListener('DOMContentLoaded', function() {
         // Force cache refresh
-        console.log('Cache version: v2025-06-20-convertkit-fix');
+        console.log('Cache version: v2025-06-20-correct-ga-id');
         console.log('Page loaded at:', new Date().toISOString());
         
-        // Track when ConvertKit form loads
+        // Track when ConvertKit form loads and add GA tracking
         setTimeout(() => {
           const ckForm = document.querySelector('.formkit-form');
           if (ckForm) {
             console.log('✅ ConvertKit form found and loaded successfully!');
+            
+            // Add GA tracking to ConvertKit form submission
+            const submitButton = ckForm.querySelector('.formkit-submit');
+            if (submitButton) {
+              submitButton.addEventListener('click', function() {
+                console.log('📧 Newsletter signup attempted');
+                if (typeof window.trackNewsletterSignup === 'function') {
+                  window.trackNewsletterSignup();
+                }
+              });
+            }
+            
+            // Track form load event
             if (typeof gtag !== 'undefined') {
               gtag('event', 'convertkit_form_loaded', {
                 event_category: 'newsletter',
-                event_label: 'static_embed_v2'
+                event_label: 'static_embed_enhanced'
               });
             }
           } else {
@@ -512,17 +573,55 @@
           }
         }, 2000);
         
-        // Force reload if ConvertKit form not found after 5 seconds
+        // Add GA tracking to affiliate links
         setTimeout(() => {
-          const ckForm = document.querySelector('.formkit-form');
-          if (!ckForm) {
-            console.log('🔄 ConvertKit form still not found, forcing reload...');
-            window.location.reload(true);
+          const affiliateLinks = document.querySelectorAll('a[href*="amazon.com"], a[href*="iherb.com"], a[href*="coolibar.com"]');
+          affiliateLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+              const productName = this.closest('.affiliate-product')?.querySelector('h3')?.textContent || 'Unknown Product';
+              const category = this.closest('.affiliate-product')?.querySelector('.category-tag')?.textContent || 'Unknown Category';
+              const url = this.href;
+              
+              console.log('🔗 Affiliate link clicked:', productName);
+              if (typeof window.trackAffiliateClick === 'function') {
+                window.trackAffiliateClick(productName, category, url);
+              }
+            });
+          });
+          console.log('✅ Affiliate link tracking added to', affiliateLinks.length, 'links');
+        }, 3000);
+        
+        // Add GA tracking to Read More buttons
+        setTimeout(() => {
+          const readMoreButtons = document.querySelectorAll('button:contains("Read More"), a:contains("Read More")');
+          readMoreButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+              const articleCard = this.closest('.news-card, .article-card') || this.closest('div');
+              const articleTitle = articleCard?.querySelector('h3, h2, .title')?.textContent || 'Unknown Article';
+              const source = articleCard?.querySelector('.source, [class*="source"]')?.textContent || 'Unknown Source';
+              
+              console.log('📖 Read More clicked:', articleTitle);
+              if (typeof window.trackReadMore === 'function') {
+                window.trackReadMore(articleTitle, source);
+              }
+            });
+          });
+          console.log('✅ Read More tracking added to', readMoreButtons.length, 'buttons');
+        }, 3000);
+        
+        // Test GA functionality
+        setTimeout(() => {
+          if (typeof gtag !== 'undefined') {
+            console.log('🧪 Testing Google Analytics...');
+            gtag('event', 'page_interaction_test', {
+              event_category: 'test',
+              event_label: 'enhanced_setup_test'
+            });
           }
-        }, 5000);
+        }, 4000);
       });
     </script>
   </body>
 </html>
 
-<!-- Cache Buster: v2025-06-20-convertkit-fix-timestamp-1734663600 -->
+<!-- Cache Buster: v2025-06-20-correct-ga-id-timestamp-1734665600 -->
