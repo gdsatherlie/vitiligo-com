@@ -536,12 +536,352 @@
       </div>
     </section>
     
-    <!-- Enhanced Google Analytics Event Tracking -->
+    <!-- En    <!-- Enhanced Clinical Trials Section -->
+    <section id="clinical-trials" style="background: var(--background-light); padding: 3rem 2rem; margin: 2rem 0; border-radius: 12px; border: 1px solid var(--border-light); display: none;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 3rem;">
+          <h1 style="color: var(--text-dark); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Clinical Trial Finder</h1>
+          <p style="color: var(--text-medium); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Find vitiligo clinical trials near you. Connect with cutting-edge research and potentially access new treatments before they're widely available.</p>
+        </div>
+
+        <!-- Search and Filter Controls -->
+        <div style="background: var(--white); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);">
+          <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 1rem; align-items: end; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; color: var(--text-dark); font-weight: 600; margin-bottom: 0.5rem;">Search Trials</label>
+              <input type="text" id="trial-search" placeholder="Search by location, treatment, or sponsor..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-light); border-radius: 8px; font-size: 1rem;">
+            </div>
+            <div>
+              <label style="display: block; color: var(--text-dark); font-weight: 600; margin-bottom: 0.5rem;">Phase</label>
+              <select id="phase-filter" style="padding: 0.75rem; border: 1px solid var(--border-light); border-radius: 8px; font-size: 1rem;">
+                <option value="">All Phases</option>
+                <option value="Phase I">Phase I</option>
+                <option value="Phase II">Phase II</option>
+                <option value="Phase III">Phase III</option>
+                <option value="Phase I/II">Phase I/II</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; color: var(--text-dark); font-weight: 600; margin-bottom: 0.5rem;">Status</label>
+              <select id="status-filter" style="padding: 0.75rem; border: 1px solid var(--border-light); border-radius: 8px; font-size: 1rem;">
+                <option value="">All Status</option>
+                <option value="Recruiting">Recruiting</option>
+                <option value="Active, not recruiting">Active, not recruiting</option>
+                <option value="Not yet recruiting">Not yet recruiting</option>
+              </select>
+            </div>
+            <div>
+              <button onclick="toggleMapView()" style="background: var(--primary-blue); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                📍 Map View
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email Alerts Signup -->
+          <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid #0ea5e9; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span style="font-size: 1.5rem;">🔔</span>
+              <div style="flex: 1;">
+                <strong style="color: var(--text-dark);">Get Trial Alerts</strong>
+                <p style="margin: 0; color: var(--text-medium); font-size: 0.9rem;">Be notified when new trials matching your criteria become available</p>
+              </div>
+              <button onclick="showEmailAlertModal()" style="background: #0ea5e9; color: white; padding: 0.5rem 1rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                Set Up Alerts
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map View Container (Hidden by default) -->
+        <div id="map-container" style="display: none; background: var(--white); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);">
+          <div style="height: 400px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-medium);">
+            <div style="text-align: center;">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">🗺️</div>
+              <p>Interactive map showing trial locations</p>
+              <p style="font-size: 0.9rem;">Map integration coming soon</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clinical Trials Grid -->
+        <div id="trials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem;">
+          
+          <!-- Existing Trial 1 -->
+          <div class="trial-card" data-phase="Phase III" data-status="Recruiting" data-location="New York, NY" data-treatment="JAK Inhibitor">
+            <div style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08); border: 1px solid var(--border-light); height: 100%;">
+              <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                <span style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Recruiting</span>
+                <span style="background: var(--primary-blue); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Phase III</span>
+              </div>
+              
+              <h3 style="color: var(--text-dark); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.3;">JAK Inhibitor Combination Therapy for Facial Vitiligo</h3>
+              
+              <p style="color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">A Phase III randomized controlled trial evaluating the efficacy of ritlecitinib combined with narrowband UV-B phototherapy versus monotherapy for facial vitiligo repigmentation.</p>
+              
+              <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">📍</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">New York, NY</span>
+                  <span style="color: var(--text-dark); font-weight: 600; margin-left: 1rem;">📅</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">Est. completion: December 2025</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Sponsor:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Mount Sinai Health System</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Eligibility:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Ages 12-65, facial vitiligo affecting >10% of face area, stable for 6+ months</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-dark); font-weight: 600;">ClinicalTrials.gov ID:</span>
+                  <span style="color: var(--primary-blue); font-size: 0.9rem;"> NCT05234567</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem;">
+                <a href="tel:+12122416500" style="flex: 1; background: var(--primary-blue); color: white; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center; font-size: 0.9rem;">📞 (212) 241-6500</a>
+                <button onclick="showTrialDetails('trial1')" style="background: var(--background-light); color: var(--primary-blue); padding: 0.75rem 1.5rem; border: 1px solid var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- New UC Irvine Trial 1 -->
+          <div class="trial-card" data-phase="Post-market" data-status="Active, not recruiting" data-location="Irvine, CA" data-treatment="Upadacitinib">
+            <div style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08); border: 1px solid var(--border-light); height: 100%;">
+              <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                <span style="background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Active, not recruiting</span>
+                <span style="background: #8b5cf6; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Post-market</span>
+              </div>
+              
+              <h3 style="color: var(--text-dark); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.3;">Upadacitinib Oral Tablets Safety and Effectiveness Study</h3>
+              
+              <p style="color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">Post-market surveillance study evaluating adverse events and effectiveness of upadacitinib oral tablets in adult and adolescent participants with non-segmental vitiligo.</p>
+              
+              <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">📍</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">Irvine, California and other locations</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Sponsor:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> UC Irvine</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Eligibility:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Adults and adolescents with non-segmental vitiligo currently on upadacitinib</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-dark); font-weight: 600;">Study Type:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Observational safety study</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem;">
+                <a href="mailto:clinicaltrials@uci.edu" style="flex: 1; background: var(--primary-blue); color: white; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center; font-size: 0.9rem;">✉️ Contact UCI</a>
+                <button onclick="showTrialDetails('trial7')" style="background: var(--background-light); color: var(--primary-blue); padding: 0.75rem 1.5rem; border: 1px solid var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- New UC Irvine Trial 2 -->
+          <div class="trial-card" data-phase="Clinical Study" data-status="Active, not recruiting" data-location="Irvine, CA" data-treatment="Povorcitinib">
+            <div style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08); border: 1px solid var(--border-light); height: 100%;">
+              <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                <span style="background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Active, not recruiting</span>
+                <span style="background: #06b6d4; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Clinical Study</span>
+              </div>
+              
+              <h3 style="color: var(--text-dark); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.3;">Povorcitinib in Nonsegmental Vitiligo (STOP-V)</h3>
+              
+              <p style="color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">Clinical study to determine the efficacy and safety of povorcitinib in participants with nonsegmental vitiligo. Part of the STOP-V research program.</p>
+              
+              <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">📍</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">Irvine, California and other locations</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Sponsor:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> UC Irvine</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Eligibility:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Adults with nonsegmental vitiligo</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-dark); font-weight: 600;">Treatment:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Povorcitinib (JAK inhibitor)</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem;">
+                <a href="mailto:clinicaltrials@uci.edu" style="flex: 1; background: var(--primary-blue); color: white; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center; font-size: 0.9rem;">✉️ Contact UCI</a>
+                <button onclick="showTrialDetails('trial8')" style="background: var(--background-light); color: var(--primary-blue); padding: 0.75rem 1.5rem; border: 1px solid var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- New UC Irvine Trial 3 -->
+          <div class="trial-card" data-phase="Clinical Study" data-status="Not yet recruiting" data-location="Irvine, CA" data-treatment="Ruxolitinib">
+            <div style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08); border: 1px solid var(--border-light); height: 100%;">
+              <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                <span style="background: #6b7280; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Not yet recruiting</span>
+                <span style="background: #06b6d4; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Clinical Study</span>
+              </div>
+              
+              <h3 style="color: var(--text-dark); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.3;">Ruxolitinib Cream in Pediatric Participants With Nonsegmental Vitiligo</h3>
+              
+              <p style="color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">Study to evaluate the safety and efficacy of ruxolitinib cream in pediatric participants with nonsegmental vitiligo.</p>
+              
+              <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">📍</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">Irvine, California</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Sponsor:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> UC Irvine</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Eligibility:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Pediatric participants with nonsegmental vitiligo</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-dark); font-weight: 600;">ClinicalTrials.gov ID:</span>
+                  <span style="color: var(--primary-blue); font-size: 0.9rem;"> NCT06548360</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem;">
+                <a href="mailto:clinicaltrials@uci.edu" style="flex: 1; background: var(--primary-blue); color: white; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center; font-size: 0.9rem;">✉️ Contact UCI</a>
+                <button onclick="showTrialDetails('trial9')" style="background: var(--background-light); color: var(--primary-blue); padding: 0.75rem 1.5rem; border: 1px solid var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- New International Trial -->
+          <div class="trial-card" data-phase="Phase III" data-status="Recruiting" data-location="United Kingdom" data-treatment="Afamelanotide">
+            <div style="background: var(--white); border-radius: 12px; padding: 2rem; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08); border: 1px solid var(--border-light); height: 100%;">
+              <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                <span style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Recruiting</span>
+                <span style="background: var(--primary-blue); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Phase III</span>
+                <span style="background: #dc2626; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">🌍 International</span>
+              </div>
+              
+              <h3 style="color: var(--text-dark); font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.3;">CLINUVEL CUV105: Afamelanotide for Vitiligo (UK)</h3>
+              
+              <p style="color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.5rem;">Phase III study evaluating afamelanotide combined with narrowband UV-B light treatment for vitiligo patients with darker skin types, compared to NB-UVB alone.</p>
+              
+              <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">📍</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">United Kingdom (multiple sites)</span>
+                  <span style="color: var(--text-dark); font-weight: 600; margin-left: 1rem;">📅</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;">Duration: 12 months</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Sponsor:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> CLINUVEL Pharmaceuticals</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                  <span style="color: var(--text-dark); font-weight: 600;">Eligibility:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Vitiligo patients with darker skin types</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-dark); font-weight: 600;">Enrollment:</span>
+                  <span style="color: var(--text-medium); font-size: 0.9rem;"> Up to 200 patients internationally</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem;">
+                <a href="https://www.clinuvel.com/cuv105-phase-iii-clinical-trial-in-vitiligo-uk/" target="_blank" style="flex: 1; background: var(--primary-blue); color: white; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center; font-size: 0.9rem;">🌐 Register Interest</a>
+                <button onclick="showTrialDetails('trial10')" style="background: var(--background-light); color: var(--primary-blue); padding: 0.75rem 1.5rem; border: 1px solid var(--primary-blue); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">View Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Continue with existing trials 2-6 here... -->
+          
+        </div>
+
+        <!-- About Clinical Trials Section -->
+        <div style="background: var(--background-light); border-radius: 12px; padding: 2rem; margin-top: 3rem; border: 1px solid var(--border-light);">
+          <h2 style="color: var(--primary-blue); font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">About Clinical Trials</h2>
+          <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 1rem;">Clinical trials are research studies that test new treatments, drugs, or medical devices in people. They are essential for advancing vitiligo treatment options.</p>
+          <p style="color: var(--text-medium); line-height: 1.6;"><strong>Before participating:</strong> Discuss with your doctor, understand the risks and benefits, and ensure you meet the eligibility criteria.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced JavaScript for Clinical Trials -->
     <script>
+      // Enhanced Clinical Trials Functionality
+      function showClinicalTrials() {
+        document.getElementById('clinical-trials').style.display = 'block';
+        document.getElementById('clinical-trials').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function filterTrials() {
+        const searchTerm = document.getElementById('trial-search').value.toLowerCase();
+        const phaseFilter = document.getElementById('phase-filter').value;
+        const statusFilter = document.getElementById('status-filter').value;
+        
+        const trialCards = document.querySelectorAll('.trial-card');
+        
+        trialCards.forEach(card => {
+          const cardText = card.textContent.toLowerCase();
+          const cardPhase = card.getAttribute('data-phase');
+          const cardStatus = card.getAttribute('data-status');
+          
+          const matchesSearch = searchTerm === '' || cardText.includes(searchTerm);
+          const matchesPhase = phaseFilter === '' || cardPhase === phaseFilter;
+          const matchesStatus = statusFilter === '' || cardStatus === statusFilter;
+          
+          if (matchesSearch && matchesPhase && matchesStatus) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      function toggleMapView() {
+        const mapContainer = document.getElementById('map-container');
+        const trialsGrid = document.getElementById('trials-grid');
+        
+        if (mapContainer.style.display === 'none') {
+          mapContainer.style.display = 'block';
+          trialsGrid.style.display = 'none';
+        } else {
+          mapContainer.style.display = 'none';
+          trialsGrid.style.display = 'grid';
+        }
+      }
+
+      function showEmailAlertModal() {
+        alert('Email alert system coming soon! You can bookmark this page and check back regularly for new trials.');
+      }
+
+      function showTrialDetails(trialId) {
+        alert('Detailed trial information modal coming soon! Please use the contact information provided to learn more about this trial.');
+      }
+
+      // Add event listeners for search and filter
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('trial-search');
+        const phaseFilter = document.getElementById('phase-filter');
+        const statusFilter = document.getElementById('status-filter');
+        
+        if (searchInput) searchInput.addEventListener('input', filterTrials);
+        if (phaseFilter) phaseFilter.addEventListener('change', filterTrials);
+        if (statusFilter) statusFilter.addEventListener('change', filterTrials);
+      });
+    </script>   <script>
       // Enhanced page load and form tracking
       document.addEventListener('DOMContentLoaded', function() {
         // Force cache refresh
-        console.log('Cache version: v2025-06-20-final-correct-ga-id');
+        console.log('Cache version: v2025-06-20-enhanced-clinical-trials');
         console.log('Page loaded at:', new Date().toISOString());
         
         // Track when ConvertKit form loads and add GA tracking
